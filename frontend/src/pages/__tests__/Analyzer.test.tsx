@@ -18,7 +18,7 @@ describe('Analyzer Component', () => {
     render(<Analyzer />);
     
     // Check if the main elements are rendered
-    expect(screen.getByText('Webpage Analyzer')).toBeInTheDocument();
+    expect(screen.getByText('SiteInsight Pro')).toBeInTheDocument();
     expect(screen.getByLabelText('Enter URL')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /analyze/i })).toBeInTheDocument();
   });

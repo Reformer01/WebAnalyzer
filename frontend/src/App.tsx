@@ -1,50 +1,43 @@
-import { ThemeProvider, createTheme, CssBaseline, Container, Box } from '@mui/material';
+import { CssBaseline, Container, Box, Typography } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
-import Navbar from './components/Navbar';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { AppBar } from './components/AppBar';
 import Dashboard from './pages/Dashboard';
 import Analyzer from './pages/Analyzer';
 import Settings from './pages/Settings';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#1976d2',
-    },
-    secondary: {
-      main: '#dc004e',
-    },
-    background: {
-      default: '#f5f5f5',
-    },
-  },
-  typography: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    h1: {
-      fontWeight: 500,
-    },
-    h2: {
-      fontWeight: 500,
-    },
-  },
-});
-
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
-
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider>
       <CssBaseline />
       <Router>
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-          <Navbar darkMode={darkMode} onThemeChange={() => setDarkMode(!darkMode)} />
-          <Container maxWidth="xl" sx={{ mt: 4, mb: 4, flexGrow: 1 }}>
+          <AppBar />
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4, flex: 1 }}>
             <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/analyze" element={<Analyzer />} />
+              <Route path="/" element={<Analyzer />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/settings" element={<Settings />} />
             </Routes>
           </Container>
+          <Box 
+            component="footer" 
+            sx={{ 
+              py: 3, 
+              px: 2, 
+              mt: 'auto', 
+              backgroundColor: (theme) => 
+                theme.palette.mode === 'light'
+                  ? theme.palette.grey[200]
+                  : theme.palette.grey[800]
+            }}
+          >
+            <Container maxWidth="lg">
+              <Typography variant="body2" color="text.secondary" align="center">
+                {new Date().getFullYear()} SiteInsight Pro. All rights reserved.
+              </Typography>
+            </Container>
+          </Box>
         </Box>
       </Router>
     </ThemeProvider>
